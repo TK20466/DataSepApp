@@ -14,9 +14,19 @@ namespace DataSepApp.Licenses
 
         public ILicenseStore Store { get; }
 
-        public ILicense FindById(int id)
+        public virtual ILicense FindById(int id)
         {
             return this.Store.Single(id);
+        }
+
+        public virtual void Create(ILicense license)
+        {
+            this.Store.Add(license);
+        }
+
+        public virtual ILicense Default()
+        {
+            return this.Store.Blank();
         }
     }
 }

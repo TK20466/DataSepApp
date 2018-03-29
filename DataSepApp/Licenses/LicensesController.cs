@@ -20,10 +20,44 @@ namespace DataSepApp.Licenses
 
         [HttpGet]
         [Route("{id:int}", Name = "Single license")]
+        [ProducesResponseType(200, Type = typeof(LicenseModel))]
         public IActionResult Get(int id)
         {
             var license = this.LicenseManager.FindById(id);
 
+            if(license == null)
+            {
+                return this.NotFound();
+            }
+
+            var licenseModel = this.BuildModel(license);
+
+            return this.Ok(licenseModel);
+        }
+
+        [HttpPost]
+        [Route("")]
+        [ProducesResponseType(201, Type = typeof(LicenseModel))]
+        public IActionResult Post(LicenseModel model)
+        {
+            if (!this.ModelState.IsValid)
+            {
+                return this.BadRequest(this.ModelState);
+            }
+
+            ILicense license = this.LicenseManager.Default();
+
+            license.Description = model.Description;
+
+            this.LicenseManager.Create(license);
+
+            var created = this.BuildModel(license);
+            // nope
+            return this.CreatedAtAction("Get", created);
+        }
+
+        private LicenseModel BuildModel(ILicense license)
+        {
             var licenseModel = new LicenseModel
             {
                 Id = license.Id,
@@ -35,7 +69,7 @@ namespace DataSepApp.Licenses
 
             licenseModel.TimeStamp = secondsSinceEpoch;
 
-            return this.Ok(licenseModel);
+            return licenseModel;
         }
     }
 }
