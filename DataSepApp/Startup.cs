@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using DataSepApp.Licenses;
+using DataSepApp.Widgets;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -24,8 +25,13 @@ namespace DataSepApp
         {
             services.AddMvc();
 
+            // method one
             services.AddTransient<ILicenseManager, LicenseManager>();
             services.AddTransient<ILicenseStore, LicenseStore2>();
+
+            // method two
+            services.AddTransient<IWidgetDataManager, WidgetDataManager>();
+            services.AddTransient<IDataStore<Widget, int>, FakeWidgetDataStore>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
