@@ -5,11 +5,11 @@ VisualStudioVersion = 15.0.27428.2015
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataSepApp", "DataSepApp\DataSepApp.csproj", "{C457A36D-633F-49B4-B331-FDF9089C6BE3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Abstractions", "Abstractions\Abstractions.csproj", "{9ED0CF03-0642-4978-8483-32878553F934}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Abstractions", "Abstractions\Abstractions.csproj", "{9ED0CF03-0642-4978-8483-32878553F934}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FakeDataStore", "FakeDataStore\FakeDataStore.csproj", "{E26A3F51-2BA3-42BB-B912-DD6EF6977D3F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FakeDataStore", "FakeDataStore\FakeDataStore.csproj", "{E26A3F51-2BA3-42BB-B912-DD6EF6977D3F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SrsBidness", "SrsBidness\SrsBidness.csproj", "{19560811-CB67-4230-8F48-A4BDE10ED554}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SrsBidness", "SrsBidness\SrsBidness.csproj", "{19560811-CB67-4230-8F48-A4BDE10ED554}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1. Application", "1. Application", "{4407B561-7262-4F40-9BF7-E7340BED1992}"
 EndProject
@@ -19,7 +19,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3. Data Layer", "3. Data La
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "4. Frameworks", "4. Frameworks", "{53446C78-D1EC-4C3A-876A-10A2D7D553AE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataTypes", "DataTypes\DataTypes.csproj", "{E8145874-DEAD-410F-9DD2-5D59C21BBF0B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataTypes", "DataTypes\DataTypes.csproj", "{E8145874-DEAD-410F-9DD2-5D59C21BBF0B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AzureStorageDataStore", "AzureStorageDataStore\AzureStorageDataStore.csproj", "{2B96A5C7-D24E-4646-99E3-D25302FD89BC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -47,6 +49,10 @@ Global
 		{E8145874-DEAD-410F-9DD2-5D59C21BBF0B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E8145874-DEAD-410F-9DD2-5D59C21BBF0B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E8145874-DEAD-410F-9DD2-5D59C21BBF0B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2B96A5C7-D24E-4646-99E3-D25302FD89BC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2B96A5C7-D24E-4646-99E3-D25302FD89BC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2B96A5C7-D24E-4646-99E3-D25302FD89BC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2B96A5C7-D24E-4646-99E3-D25302FD89BC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -57,6 +63,7 @@ Global
 		{E26A3F51-2BA3-42BB-B912-DD6EF6977D3F} = {150C0BD9-95B4-4263-B795-C7CC3E902D89}
 		{19560811-CB67-4230-8F48-A4BDE10ED554} = {D09E0290-D1D0-439F-BE7B-430C7E0FC263}
 		{E8145874-DEAD-410F-9DD2-5D59C21BBF0B} = {150C0BD9-95B4-4263-B795-C7CC3E902D89}
+		{2B96A5C7-D24E-4646-99E3-D25302FD89BC} = {150C0BD9-95B4-4263-B795-C7CC3E902D89}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {515DC881-3921-461E-ADB2-F52A00C36746}

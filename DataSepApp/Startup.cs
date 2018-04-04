@@ -27,6 +27,9 @@ namespace DataSepApp
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            string connectionString = "UseDevelopmentStorage=true";
+
+
             services.AddMvc();
 
             // method one
@@ -35,7 +38,8 @@ namespace DataSepApp
 
             // method two
             services.AddTransient<IWidgetDataManager, WidgetDataManager>();
-            services.AddTransient<IDataStore<Widget, int, WidgetSearchRequest>, FakeWidgetDataStore>();
+            //services.AddTransient<IDataStore<Widget, int, WidgetSearchRequest>, FakeWidgetDataStore>();
+            services.AddTransient<IDataStore<Widget, int, WidgetSearchRequest>, AzureStorageDataStore.AzureTableStorageWidgetDataStore>((sp) => { return new AzureStorageDataStore.AzureTableStorageWidgetDataStore(connectionString); });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -15,6 +15,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Abstractions\Abstractions.csproj" />
+    <ProjectReference Include="..\AzureStorageDataStore\AzureStorageDataStore.csproj" />
     <ProjectReference Include="..\DataTypes\DataTypes.csproj" />
     <ProjectReference Include="..\FakeDataStore\FakeDataStore.csproj" />
     <ProjectReference Include="..\SrsBidness\SrsBidness.csproj" />
