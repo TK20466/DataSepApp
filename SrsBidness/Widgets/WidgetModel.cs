@@ -1,4 +1,4 @@
-﻿namespace DataSepApp.Widgets
+﻿namespace SrsBidness.Widgets
 {
     public class WidgetModel
     {

@@ -1,4 +1,4 @@
-﻿namespace DataSepApp.Widgets
+﻿namespace DataTypes
 {
     public class Widget
     {

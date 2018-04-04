@@ -1,9 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
+using Abstractions;
+using DataTypes;
 using Microsoft.AspNetCore.Mvc;
+using SrsBidness.Widgets;
 
 namespace DataSepApp.Widgets
 {
@@ -32,6 +33,36 @@ namespace DataSepApp.Widgets
 
             return this.Ok(model);
         }
+
+        [HttpGet("", Name = "Search")]
+        [ProducesResponseType(200, Type = typeof(PagedSearchResult<WidgetModel>))]
+        public IActionResult Search([FromQuery]WidgetSearchRequest searchRequest)
+        {
+            // 1. Checking model state, this can probably be done in global filters and validations steps
+            if (!this.ModelState.IsValid)
+            {
+                return this.BadRequest();
+            }
+
+            // 2. can this be done in a filter validation steps?
+            WidgetSearchRequest actual = searchRequest ?? new WidgetSearchRequest();
+
+            // 3. Hmm, have to pass search request into manager somehow, is this the best method
+            PagedSearchResult<Widget> searchResults = this.DataManager.PagedSearch(searchRequest);
+
+            // 4. Could inline this, or maybe extension methods
+            IList<WidgetModel> models = searchResults.Results.Select(x => new WidgetModel { Id = x.Id, Name = x.Description }).ToList();
+
+            PagedSearchResult<WidgetModel> results = new PagedSearchResult<WidgetModel>
+            {
+                Page = searchResults.Page,
+                PageSize = searchResults.PageSize,
+                Count = searchResults.Count,
+                Results = new ReadOnlyCollection<WidgetModel>(models)
+            };
+
+            return this.Ok(results);
+        }
         
         [HttpPost]
         public IActionResult Post([FromBody]WidgetModel widget)
@@ -41,11 +72,11 @@ namespace DataSepApp.Widgets
                 return this.BadRequest(this.ModelState);
             }
 
-            Widget w = new Widget { Id = widget.Id };
+            Widget w = new Widget { Description = widget.Name };
 
             Widget z = this.DataManager.Add(w);
 
-            WidgetModel y = new WidgetModel { Id = z.Id };
+            WidgetModel y = new WidgetModel { Id = z.Id, Name = z.Description };
 
             return this.CreatedAtAction("Post", y);
         }

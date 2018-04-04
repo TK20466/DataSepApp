@@ -13,4 +13,11 @@
     <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="2.0.3" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Abstractions\Abstractions.csproj" />
+    <ProjectReference Include="..\DataTypes\DataTypes.csproj" />
+    <ProjectReference Include="..\FakeDataStore\FakeDataStore.csproj" />
+    <ProjectReference Include="..\SrsBidness\SrsBidness.csproj" />
+  </ItemGroup>
+
 </Project>

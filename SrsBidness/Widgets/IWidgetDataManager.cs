@@ -1,4 +1,7 @@
-﻿namespace DataSepApp.Widgets
+﻿using Abstractions;
+using DataTypes;
+
+namespace SrsBidness.Widgets
 {
     public interface IWidgetDataManager
     {
@@ -9,5 +12,7 @@
         Widget Update(Widget item);
 
         void Delete(Widget item);
+
+        PagedSearchResult<Widget> PagedSearch(WidgetSearchRequest searchRequest);
     }
 }

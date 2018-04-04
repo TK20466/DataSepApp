@@ -2,12 +2,16 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Abstractions;
 using DataSepApp.Licenses;
 using DataSepApp.Widgets;
+using DataTypes;
+using FakeDataStore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using SrsBidness.Widgets;
 
 namespace DataSepApp
 {
@@ -31,7 +35,7 @@ namespace DataSepApp
 
             // method two
             services.AddTransient<IWidgetDataManager, WidgetDataManager>();
-            services.AddTransient<IDataStore<Widget, int>, FakeWidgetDataStore>();
+            services.AddTransient<IDataStore<Widget, int, WidgetSearchRequest>, FakeWidgetDataStore>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
