@@ -1,18 +1,19 @@
 ﻿using Abstractions;
 using DataTypes;
+using System.Threading.Tasks;
 
 namespace SrsBidness.Widgets
 {
     public interface IWidgetDataManager
     {
-        Widget GetSingle(int id);
+        Task<Widget> GetSingle(int id);
 
-        Widget Add(Widget newItem);
+        Task<Widget> Add(Widget newItem);
 
-        Widget Update(Widget item);
+        Task<Widget> Update(Widget item);
 
-        void Delete(Widget item);
+        Task Delete(Widget item);
 
-        PagedSearchResult<Widget> PagedSearch(WidgetSearchRequest searchRequest);
+        Task<PagedSearchResult<Widget>> PagedSearch(WidgetSearchRequest searchRequest);
     }
 }

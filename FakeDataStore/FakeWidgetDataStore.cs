@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using Abstractions;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace FakeDataStore
 {
@@ -12,32 +13,34 @@ namespace FakeDataStore
         private static int nextId = 1;
 
 
-        public Widget CreateNew(Widget item)
+        public Task<Widget> CreateNew(Widget item)
         {
             item.Id = nextId;
             nextId++;
 
             widgets.Add(item);
 
-            return item;
+            return Task.FromResult<Widget>(item);
         }
 
-        public void Delete(Widget item)
+        public Task Delete(Widget item)
         {
-            widgets.Remove(item);            
+            widgets.Remove(item);
+
+            return Task.FromResult(0);
         }
 
-        public Widget FindById(int id)
+        public Task<Widget> FindById(int id)
         {
-            return widgets.SingleOrDefault(x => x.Id == id);
+            return Task.FromResult<Widget>(widgets.SingleOrDefault(x => x.Id == id));
         }
 
-        public Widget UpdateExisting(Widget item)
+        public Task<Widget> UpdateExisting(Widget item)
         {
-            return item;
+            return Task.FromResult<Widget>(item);
         }
 
-        public PagedSearchResult<Widget> PagedSearch(WidgetSearchRequest searchRequest)
+        public Task<PagedSearchResult<Widget>> PagedSearch(WidgetSearchRequest searchRequest)
         {
             IEnumerable<Widget> results = widgets;
 
@@ -69,7 +72,7 @@ namespace FakeDataStore
             };
 
 
-            return result;
+            return Task.FromResult<PagedSearchResult<Widget>>(result);
         }
     }
 }

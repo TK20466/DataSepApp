@@ -1,17 +1,18 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Abstractions
 {
     public interface IDataStore<T, U, V> where T : class
     {
-        T FindById(U id);
+        Task<T> FindById(U id);
 
-        T CreateNew(T item);
+        Task<T> CreateNew(T item);
 
-        T UpdateExisting(T item);
+        Task<T> UpdateExisting(T item);
 
-        void Delete(T item);
+        Task Delete(T item);
 
-        PagedSearchResult<T> PagedSearch(V searchRequest);
+        Task<PagedSearchResult<T>> PagedSearch(V searchRequest);
     }
 }

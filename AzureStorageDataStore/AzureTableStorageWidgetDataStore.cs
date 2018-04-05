@@ -3,6 +3,7 @@ using DataTypes;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace AzureStorageDataStore
 {
@@ -17,36 +18,64 @@ namespace AzureStorageDataStore
             tableAccess = new TableAccess<WidgetTableEntity>(connectionString, tableName);
         }
 
-        public Widget CreateNew(Widget item)
+        public async Task<Widget> CreateNew(Widget item)
         {
             int id = idGenerator.Next(1, int.MaxValue);
 
             WidgetTableEntity entity = new WidgetTableEntity(id, item.Description);
 
-            tableAccess.AddAsync(entity);
+            await tableAccess.AddAsync(entity);
 
             item.Id = id;
 
             return item;
         }
 
-        public void Delete(Widget item)
+        public async Task Delete(Widget item)
         {
+            WidgetTableEntity entity = await tableAccess.GetSingleAsync("widget", item.Id.ToString());
+
+            if (entity != null)
+            {
+                await tableAccess.DeleteAsync(entity);
+            }
         }
 
-        public Widget FindById(int id)
+        public async Task<Widget> FindById(int id)
+        {
+            WidgetTableEntity entity = await tableAccess.GetSingleAsync("widget", id.ToString());
+            
+            if (entity != null)
+            {
+                Widget w = new Widget
+                {
+                    Id = entity.Id,
+                    Description = entity.Name
+                };
+
+                return w;
+            }
+
+            return null;
+        }
+
+        public Task<PagedSearchResult<Widget>> PagedSearch(WidgetSearchRequest searchRequest)
         {
             return null;
         }
 
-        public PagedSearchResult<Widget> PagedSearch(WidgetSearchRequest searchRequest)
+        public async Task<Widget> UpdateExisting(Widget item)
         {
-            return null;
-        }
+            WidgetTableEntity entity = await tableAccess.GetSingleAsync("widget", item.Id.ToString());
 
-        public Widget UpdateExisting(Widget item)
-        {
-            return null;
+            if (entity != null)
+            {
+                entity.Name = item.Description;
+
+                await tableAccess.InsertOrReplaceAsync(entity);
+            }
+
+            return item;
         }
     }
 }

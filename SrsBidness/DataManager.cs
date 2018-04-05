@@ -1,5 +1,5 @@
 ﻿using Abstractions;
-
+using System.Threading.Tasks;
 
 namespace SrsBidness
 {
@@ -19,27 +19,27 @@ namespace SrsBidness
 
         protected IDataStore<T, U, V> DataStore { get; }
 
-        public virtual T GetSingle(U id)
+        public virtual Task<T> GetSingle(U id)
         {
             return this.DataStore.FindById(id);
         }
 
-        public virtual T Add(T newItem)
+        public virtual Task<T> Add(T newItem)
         {
             return this.DataStore.CreateNew(newItem);
         }
 
-        public virtual T Update(T item)
+        public virtual Task<T> Update(T item)
         {
             return this.DataStore.UpdateExisting(item);
         }
 
-        public virtual void Delete(T item)
+        public async virtual Task Delete(T item)
         {
-            this.DataStore.Delete(item);
+            await this.DataStore.Delete(item);
         }
 
-        public virtual PagedSearchResult<T> PagedSearch(V searchParams)
+        public virtual Task<PagedSearchResult<T>> PagedSearch(V searchParams)
         {
             return this.DataStore.PagedSearch(searchParams);
         }

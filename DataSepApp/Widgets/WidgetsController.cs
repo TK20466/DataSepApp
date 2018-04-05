@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Threading.Tasks;
 using Abstractions;
 using DataTypes;
 using Microsoft.AspNetCore.Mvc;
@@ -20,9 +21,9 @@ namespace DataSepApp.Widgets
 
 
         [HttpGet("{id}", Name = "Get")]
-        public IActionResult Get(int id)
+        public async Task<IActionResult> Get(int id)
         {
-            var thing = this.DataManager.GetSingle(id);
+            var thing = await this.DataManager.GetSingle(id);
 
             if (thing == null)
             {
@@ -36,7 +37,7 @@ namespace DataSepApp.Widgets
 
         [HttpGet("", Name = "Search")]
         [ProducesResponseType(200, Type = typeof(PagedSearchResult<WidgetModel>))]
-        public IActionResult Search([FromQuery]WidgetSearchRequest searchRequest)
+        public async Task<IActionResult> Search([FromQuery]WidgetSearchRequest searchRequest)
         {
             // 1. Checking model state, this can probably be done in global filters and validations steps
             if (!this.ModelState.IsValid)
@@ -48,7 +49,7 @@ namespace DataSepApp.Widgets
             WidgetSearchRequest actual = searchRequest ?? new WidgetSearchRequest();
 
             // 3. Hmm, have to pass search request into manager somehow, is this the best method
-            PagedSearchResult<Widget> searchResults = this.DataManager.PagedSearch(searchRequest);
+            PagedSearchResult<Widget> searchResults = await this.DataManager.PagedSearch(searchRequest);
 
             // 4. Could inline this, or maybe extension methods
             IList<WidgetModel> models = searchResults.Results.Select(x => new WidgetModel { Id = x.Id, Name = x.Description }).ToList();
@@ -65,7 +66,7 @@ namespace DataSepApp.Widgets
         }
         
         [HttpPost]
-        public IActionResult Post([FromBody]WidgetModel widget)
+        public async Task<IActionResult> Post([FromBody]WidgetModel widget)
         {
             if (!this.ModelState.IsValid)
             {
@@ -74,7 +75,7 @@ namespace DataSepApp.Widgets
 
             Widget w = new Widget { Description = widget.Name };
 
-            Widget z = this.DataManager.Add(w);
+            Widget z = await this.DataManager.Add(w);
 
             WidgetModel y = new WidgetModel { Id = z.Id, Name = z.Description };
 
@@ -82,7 +83,7 @@ namespace DataSepApp.Widgets
         }
         
         [HttpPut("{id}")]
-        public IActionResult Put(int id, [FromBody]WidgetModel value)
+        public async Task<IActionResult> Put(int id, [FromBody]WidgetModel value)
         {
             if (!this.ModelState.IsValid)
             {
@@ -94,26 +95,26 @@ namespace DataSepApp.Widgets
                 return this.BadRequest();
             }
 
-            Widget w = this.DataManager.GetSingle(id);
+            Widget w = await this.DataManager.GetSingle(id);
 
             w.Description = value.Name;
 
-            w = this.DataManager.Update(w);
+            w = await this.DataManager.Update(w);
 
             return this.Ok();
         }
         
         [HttpDelete("{id}")]
-        public IActionResult Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
-            var item = this.DataManager.GetSingle(id);
+            var item = await this.DataManager.GetSingle(id);
 
             if (item == null)
             {
                 return this.NotFound();
             }
 
-            this.DataManager.Delete(item);
+            await this.DataManager.Delete(item);
 
             return this.Ok();
         }

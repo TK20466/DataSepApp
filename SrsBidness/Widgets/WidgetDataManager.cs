@@ -1,5 +1,6 @@
 ﻿using Abstractions;
 using DataTypes;
+using System.Threading.Tasks;
 
 namespace SrsBidness.Widgets
 {
@@ -11,7 +12,7 @@ namespace SrsBidness.Widgets
 
         }
 
-        public override Widget Add(Widget newItem)
+        public override Task<Widget> Add(Widget newItem)
         {
             // here i'd so some logging or other super fun stuff
 
